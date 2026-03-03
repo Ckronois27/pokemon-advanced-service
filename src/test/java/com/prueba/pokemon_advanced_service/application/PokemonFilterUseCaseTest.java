@@ -28,7 +28,7 @@ class PokemonFilterUseCaseTest {
 
     @Test
     void shouldFilterPokemonByMinDefenseCorrectly() {
-        // --- GIVEN (Preparar los datos falsos) ---
+        // (Preparar los datos falsos) ---
         PokemonStats statsWeak = PokemonStats.builder().defense(50).build();
         PokemonBasicInfo pikachu = PokemonBasicInfo.builder().name("pikachu").stats(statsWeak).build();
 
@@ -37,22 +37,22 @@ class PokemonFilterUseCaseTest {
 
         List<PokemonBasicInfo> mockList = List.of(pikachu, blastoise);
 
-        // AQUÍ ESTÁ LA MAGIA: Le decimos al puerto falso qué responder cuando le pidan los datos
-        // IMPORTANTE: Cambia "obtenerTodosLosPokemon()" por el nombre real de tu método en el puerto.
+        //  Le decimos al puerto falso qué responder cuando le pidan los datos
+        //  Cambia "obtenerTodosLosPokemon()" por el nombre real de tu método en el puerto.
        when(pokemonRepositoryPort.getPokemonBatch(org.mockito.Mockito.anyInt())).thenReturn(mockList);
 
-        // --- WHEN (Ejecutar tu código real) ---
+        // WHEN (Ejecutar tu código real) 
         // Ahora sí, llamamos a tu método solo con el parámetro 80
         PokemonFilteredResponse result = pokemonFilterService.filterByMinDefense(80);
 
-        // --- THEN (Verificar que tu lógica funcionó) ---
+        // THEN (Verificar que tu lógica funcionó) 
         assertEquals(1, result.getResults().size(), "El filtro debería dejar pasar solo a 1 Pokémon");
         assertEquals("blastoise", result.getResults().get(0).getName(), "El Pokémon filtrado debe ser Blastoise");
     }
 
     @Test
     void shouldFilterPokemonByMinExperienceCorrectly() {
-        // --- GIVEN (Datos falsos) ---
+        //  GIVEN (Datos falsos) 
         // Creamos un Pokémon con poca experiencia (50)
        PokemonStats statsLow = PokemonStats.builder().defense(50).build();
        PokemonBasicInfo pidgey = PokemonBasicInfo.builder()
@@ -65,7 +65,7 @@ class PokemonFilterUseCaseTest {
         PokemonStats statsHigh = PokemonStats.builder().defense(100).build();
         PokemonBasicInfo charizard = PokemonBasicInfo.builder()
         .name("charizard")
-        .baseExperience(150) // <-- ¡Y también aquí!
+        .baseExperience(150) // 
         .stats(statsHigh)
         .build();
 
@@ -74,10 +74,10 @@ class PokemonFilterUseCaseTest {
         // Le decimos al puerto falso qué responder (igual que en la prueba anterior)
         when(pokemonRepositoryPort.getPokemonBatch(org.mockito.Mockito.anyInt())).thenReturn(mockList);
 
-        // --- WHEN (Ejecutamos el filtro pidiendo mínimo 100 de exp) ---
+        //  WHEN (Ejecutamos el filtro pidiendo mínimo 100 de exp) 
         PokemonFilteredResponse result = pokemonFilterService.filterByMinExperience(100);
 
-        // --- THEN (Verificamos) ---
+        //  THEN (Verificamos) 
         assertEquals(1, result.getResults().size(), "El filtro debería dejar pasar solo a 1 Pokémon");
         assertEquals("charizard", result.getResults().get(0).getName(), "El Pokémon filtrado debe ser Charizard");
     }
