@@ -19,4 +19,5 @@ public class PokemonStats {
     private Integer defense;
     
     // Nota: Se pueden agregar más estadísticas base (hp, attack, speed) si el negocio lo requiere a futuro.
+    private Integer baseExperience;
 }
